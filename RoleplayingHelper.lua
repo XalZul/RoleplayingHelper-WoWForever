@@ -6,6 +6,8 @@ _G.RPHForever = RPH
 RPH.version = "0.2.0-dev"
 RPH.events = {"entercombat","leavecombat","hurt","miss","absorb","block","dodge","parry","youcrit","youcritspell","youheal","youcritheal","petattackstart","petattackstop","petdies","resurrect","talktonpc_firsttime","talktonpc_beginning","talktonpc_middle","talktonpc_end","npctalksfriend","npctalksenemy","player_level_up","player_camping","hearthstone","trade_show","trade_closed","monster_emote_help","monster_emote_fear","monster_emote_enrage","mount","learn","drunk","sober","fall","exhausted","new_home","welcome_home","drowning","av_recall","bg_begin","epl_pvp_tower_cap","epl_pvp_tower_lose","scourge_cauldron","brd_emote_slave"}
 _G.RPWORDLIST = _G.RPWORDLIST or {}
+RPWORDLIST.randominsult = RPWORDLIST.randominsult or {}
+RPWORDLIST.randomemote = RPWORDLIST.randomemote or {}
 for _,k in ipairs(RPH.events) do RPWORDLIST[k]=RPWORDLIST[k] or {}; RPWORDLIST[k].ANY=RPWORDLIST[k].ANY or {} end
 local defaults={enabled=true,chance=.03,delay=8}
 local function InitDB()
@@ -35,6 +37,16 @@ local function PhraseFor(key)
   end
  end
 end
+local function RandomInsult()
+ local d=RPWORDLIST.randominsult and RPWORDLIST.randominsult.ANY; if type(d)~="table" then return end
+ local a,b,c=d[1],d[2],d[3]; if not a or not b or not c then return end
+ return "You "..a[math.random(#a)].." "..b[math.random(#b)].." "..c[math.random(#c)].."!"
+end
+local function RandomEmote()
+ local d=RPWORDLIST.randomemote and RPWORDLIST.randomemote.ANY; if type(d)~="table" then return end
+ local a,b,c=d[1],d[2],d[3]; if not a or not b or not c then return end
+ return a[math.random(#a)].." "..b[math.random(#b)].." "..c[math.random(#c)].."."
+end
 local lastRP=0
 function RPH:Trigger(key,force)
  if not RPHForeverDB or not RPHForeverDB.enabled then return end
@@ -52,8 +64,10 @@ SlashCmdList.RPHFOREVER=function(msg)
  elseif cmd=="off" then RPHForeverDB.enabled=false; print("Roleplaying Helper disabled.")
  elseif cmd=="toggle" then RPH:Toggle()
  elseif cmd=="status" then RPH:Status()
+ elseif cmd=="insult" or cmd=="i" then local phrase=RandomInsult(); if phrase then SendChatMessage(phrase,"SAY") else print("Roleplaying Helper: insult phrase data unavailable.") end
+ elseif cmd=="emote" or cmd=="e" then local phrase=RandomEmote(); if phrase then SendChatMessage(phrase,"EMOTE") else print("Roleplaying Helper: emote phrase data unavailable.") end
  elseif cmd:match("^test%s+") then local key=cmd:match("^test%s+([%w_]+)$"); if key then RPH:Trigger(key,true) end
- elseif cmd=="help" then print("/rp [on|off|toggle|status|test EVENT]")
+ elseif cmd=="help" then print("/rp [on|off|toggle|status|insult|emote|test EVENT]")
  else if RPH.options then RPH.options:SetShown(not RPH.options:IsShown()) else RPH:Status() end end
 end
 local f=CreateFrame("Frame"); RPH.frame=f; f:RegisterEvent("PLAYER_LOGIN")
