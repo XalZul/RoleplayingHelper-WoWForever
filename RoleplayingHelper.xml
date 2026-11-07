@@ -1,0 +1,4 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui">
+    <!-- Configuration panel shell. Original Vanilla XML uses removed templates
+         and will be rebuilt with supported modern widgets in the port. -->
+</Ui>
