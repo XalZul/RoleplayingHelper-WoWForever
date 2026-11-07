@@ -4,27 +4,28 @@ A compatibility port of the archived Roleplaying Helper 0.90d addon for WoW 1.12
 
 ## Current status: early development port (0.2.0-dev)
 
-The port now includes:
-- Mainline-style addon manifest and per-character SavedVariables.
-- Modern frame event registration and slash commands: `/rp`, `/rph`, `/rp on`, `/rp off`, `/rp toggle`, `/rp status`, and `/rp test EVENT`.
-- Modern combat-log mapping for combat start/end, incoming damage/misses, player critical hits, and heals.
-- Basic NPC/gossip, merchant, trade, mount, resurrection, and level-up triggers where modern events expose a usable signal.
-- The original English race/class phrase modules, generic phrases, insults/emotes, emote definitions, and event/spell localization data copied into `Data/`.
-- A compact modern settings panel for global enable, chance, and delay.
+Implemented in this checkpoint:
+- Forever 1.60.1 manifest (`Interface: 16001`) and per-character SavedVariables.
+- Slash commands: `/rp`, `/rph`, `/rp on`, `/rp off`, `/rp toggle`, `/rp status`, and `/rp test EVENT`.
+- Basic modern settings panel for global enable, chance, and delay.
+- Modern frame-event triggers for combat start/end, resurrection, level-up, gossip/merchant interactions, trade windows, mounting, selected NPC chat events, and logout.
+- Original English generic, race, class, insult and emote phrase modules, plus the original event/spell localization and emote definitions copied into `Data/`.
 
-## Compatibility notes
+## Important Forever API limitation
 
-This is not yet feature-complete and has not been tested inside a WoW Forever client. Vanilla's old combat-chat events and many 1.12 UI templates no longer exist in the modern client. Some original features therefore need redesigned triggers or cannot be reproduced exactly.
+Forever uses the modern Mainline-family addon API, not the Vanilla 1.12 API. In particular, the current Forever client does not deliver the traditional combat-log event stream to addons. That prevents an addon from reliably reproducing many of the original combat reactions (incoming hits, misses, blocks, dodges, parries, damage/spell criticals, and healing criticals) using the original event model. These reactions are therefore not currently implemented. This is a client restriction, not simply a missing code conversion.
 
-Known porting work still required:
+The current build does **not** claim feature parity with Vanilla Roleplaying Helper.
+
+## Remaining work
 - Rebuild the original multi-page configuration UI, including per-event/per-spell chance and delay, trait selection, event/spell lists, language controls, and debug/statistics pages.
 - Port the original keyword substitution engine and custom phrase composition.
-- Complete modern pet, spell, NPC conversation-stage, quest, resurrection, and world-event triggers.
-- Validate all combat-log field mappings and event availability against the exact Forever build.
+- Investigate supported non-combat alternatives for pet, spell, quest, NPC conversation-stage, and world-event triggers.
+- Restore event-specific emotes/custom emotes and random phrase construction.
 - Add German localization after the English port is stable.
-- Add in-client regression testing and fix any UI-template/API differences.
+- Test in the live Forever client and verify all event names, UI templates, and SavedVariables behavior.
 
-The original phrase data is retained, but the compatibility layer currently handles only a subset of the original runtime behavior. Do not treat this development version as a release-ready replacement.
+The original phrase content is preserved, but the compatibility layer currently uses only a subset of the original runtime behavior. Do not treat this development version as a release-ready replacement.
 
 ## Installation (when ready)
 
@@ -32,4 +33,4 @@ Place the addon folder in the Forever client's `Interface/AddOns/RoleplayingHelp
 
 ## Credits and source
 
-Original addon and phrase content by the Roleplaying Helper authors and translators. The archived source is at https://github.com/XalZul/RoleplayingHelper-1.12. This port preserves attribution and keeps the archived repository untouched.
+Original addon and phrase content by the Roleplaying Helper authors and translators. Archived source: https://github.com/XalZul/RoleplayingHelper-1.12. This port preserves attribution and leaves that repository untouched.
