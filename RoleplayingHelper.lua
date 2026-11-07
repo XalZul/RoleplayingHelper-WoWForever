@@ -56,28 +56,13 @@ SlashCmdList.RPHFOREVER=function(msg)
  elseif cmd=="help" then print("/rp [on|off|toggle|status|test EVENT]")
  else if RPH.options then RPH.options:SetShown(not RPH.options:IsShown()) else RPH:Status() end end
 end
-local function CombatLog()
- local a={CombatLogGetCurrentEventInfo()}; local sub=a[2]; local src=a[4]; local dst=a[8]; local pg=UnitGUID("player")
- if src==pg then
-  if sub=="SPELL_HEAL" then RPH:Trigger(a[21] and "youcritheal" or "youheal")
-  elseif sub=="SWING_DAMAGE" and a[18] then RPH:Trigger("youcrit")
-  elseif (sub=="SPELL_DAMAGE" or sub=="RANGE_DAMAGE") and a[21] then RPH:Trigger("youcritspell") end
- elseif dst==pg then
-  if sub=="SWING_DAMAGE" or sub=="SPELL_DAMAGE" or sub=="RANGE_DAMAGE" then RPH:Trigger("hurt")
-  elseif sub=="SWING_MISSED" or sub=="SPELL_MISSED" or sub=="RANGE_MISSED" then
-   local miss=sub=="SWING_MISSED" and a[12] or a[15]
-   if miss=="DODGE" then RPH:Trigger("dodge") elseif miss=="PARRY" then RPH:Trigger("parry") elseif miss=="BLOCK" then RPH:Trigger("block") elseif miss=="ABSORB" then RPH:Trigger("absorb") else RPH:Trigger("miss") end
-  end
- end
-end
 local f=CreateFrame("Frame"); RPH.frame=f; f:RegisterEvent("PLAYER_LOGIN")
 f:SetScript("OnEvent",function(self,event,...)
  if event=="PLAYER_LOGIN" then
-  InitDB(); for _,e in ipairs({"PLAYER_REGEN_DISABLED","PLAYER_REGEN_ENABLED","COMBAT_LOG_EVENT_UNFILTERED","PLAYER_ALIVE","PLAYER_LEVEL_UP","GOSSIP_SHOW","GOSSIP_CLOSED","MERCHANT_SHOW","TRADE_SHOW","TRADE_CLOSED","PLAYER_MOUNT_DISPLAY_CHANGED","CHAT_MSG_MONSTER_SAY","CHAT_MSG_MONSTER_EMOTE","CHAT_MSG_MONSTER_YELL","PLAYER_CAMPING"}) do self:RegisterEvent(e) end
+  InitDB(); for _,e in ipairs({"PLAYER_REGEN_DISABLED","PLAYER_REGEN_ENABLED","PLAYER_ALIVE","PLAYER_LEVEL_UP","GOSSIP_SHOW","GOSSIP_CLOSED","MERCHANT_SHOW","TRADE_SHOW","TRADE_CLOSED","PLAYER_MOUNT_DISPLAY_CHANGED","CHAT_MSG_MONSTER_SAY","CHAT_MSG_MONSTER_EMOTE","CHAT_MSG_MONSTER_YELL","PLAYER_LOGOUT"}) do self:RegisterEvent(e) end
   math.randomseed((GetServerTime and GetServerTime() or time())%2147483647); print("Roleplaying Helper (Forever) loaded. /rp help")
  elseif event=="PLAYER_REGEN_DISABLED" then RPH:Trigger("entercombat")
  elseif event=="PLAYER_REGEN_ENABLED" then RPH:Trigger("leavecombat")
- elseif event=="COMBAT_LOG_EVENT_UNFILTERED" then CombatLog()
  elseif event=="PLAYER_ALIVE" then RPH:Trigger("resurrect")
  elseif event=="PLAYER_LEVEL_UP" then RPH:Trigger("player_level_up")
  elseif event=="GOSSIP_SHOW" then RPH:Trigger("talktonpc_beginning")
@@ -86,7 +71,7 @@ f:SetScript("OnEvent",function(self,event,...)
  elseif event=="TRADE_SHOW" then RPH:Trigger("trade_show")
  elseif event=="TRADE_CLOSED" then RPH:Trigger("trade_closed")
  elseif event=="PLAYER_MOUNT_DISPLAY_CHANGED" then RPH:Trigger("mount")
- elseif event=="PLAYER_CAMPING" then RPH:Trigger("player_camping")
+ elseif event=="PLAYER_LOGOUT" then RPH:Trigger("player_camping")
  elseif event=="CHAT_MSG_MONSTER_SAY" then RPH:Trigger("npctalksfriend")
  elseif event=="CHAT_MSG_MONSTER_EMOTE" or event=="CHAT_MSG_MONSTER_YELL" then RPH:Trigger("monster_emote_help") end
 end)
