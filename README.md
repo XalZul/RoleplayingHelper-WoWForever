@@ -6,7 +6,7 @@ A compatibility port of the archived Roleplaying Helper 0.90d addon for WoW 1.12
 
 Implemented in this checkpoint:
 - Forever 1.60.1 manifest (`Interface: 16001`) and per-character SavedVariables.
-- Slash commands: `/rp`, `/rph`, `/rp on`, `/rp off`, `/rp toggle`, `/rp status`, and `/rp test EVENT`.
+- Slash commands: `/rp`, `/rph`, `/rp on`, `/rp off`, `/rp toggle`, `/rp status`, `/rp insult` (or `/rp i`), `/rp emote` (or `/rp e`), and `/rp test EVENT`.
 - Basic modern settings panel for global enable, chance, and delay.
 - Modern frame-event triggers for combat start/end, resurrection, level-up, gossip/merchant interactions, trade windows, mounting, selected NPC chat events, and logout.
 - Original English generic, race, class, insult and emote phrase modules, plus the original event/spell localization and emote definitions copied into `Data/`.
