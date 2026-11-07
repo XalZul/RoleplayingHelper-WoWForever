@@ -1,0 +1,9 @@
+## Interface: 16001
+## Title: Roleplaying Helper (Forever)
+## Notes: Automatically roleplay when supported events occur
+## Author: Original authors; Forever port by XalZul
+## Version: 0.1.0-dev
+## SavedVariablesPerCharacter: RPHForeverDB
+
+RoleplayingHelper.lua
+RoleplayingHelper.xml
