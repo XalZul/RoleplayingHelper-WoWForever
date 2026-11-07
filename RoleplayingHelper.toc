@@ -1,9 +1,31 @@
 ## Interface: 16001
 ## Title: Roleplaying Helper (Forever)
-## Notes: Automatically roleplay when supported events occur
+## Notes: Automatic roleplay reactions to supported game events
 ## Author: Original authors; Forever port by XalZul
-## Version: 0.1.0-dev
+## Version: 0.2.0-dev
 ## SavedVariablesPerCharacter: RPHForeverDB
 
+Data/localization.lua
 RoleplayingHelper.lua
+Data/RoleplayingHelper_Emotes.lua
+Data/English/ANY.lua
+Data/English/DWARF.lua
+Data/English/GNOME.lua
+Data/English/HUMAN.lua
+Data/English/NIGHTELF.lua
+Data/English/ORC.lua
+Data/English/TAUREN.lua
+Data/English/TROLL.lua
+Data/English/UNDEAD.lua
+Data/English/DRUID.lua
+Data/English/HUNTER.lua
+Data/English/MAGE.lua
+Data/English/PALADIN.lua
+Data/English/PRIEST.lua
+Data/English/ROGUE.lua
+Data/English/SHAMAN.lua
+Data/English/WARLOCK.lua
+Data/English/WARRIOR.lua
+Data/English/RInsult.lua
+Data/English/REmote.lua
 RoleplayingHelper.xml
